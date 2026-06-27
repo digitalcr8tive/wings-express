@@ -47,8 +47,8 @@ p { text-wrap: pretty; }
 .button-ghost { background: transparent; color: currentColor; border: 2px solid currentColor; }
 .button:disabled { opacity: .5; cursor: not-allowed; }
 .dd-logo { width: 1.5em; height: auto; fill: currentColor; flex: 0 0 auto; }
-.header-order { min-width: 12.5rem; font-family: var(--display); font-size: 1.05rem; text-transform: uppercase; line-height: 1; align-items: flex-end !important; }
-.header-order .dd-logo { height: 0.9524em; width: auto; }
+.header-order { min-width: 12.5rem; font-family: var(--display); font-size: 1.05rem; text-transform: uppercase; }
+.header-order .dd-logo { position: relative; top: 0.15em; }
 .site-header { position: sticky; top: 0; z-index: var(--z-sticky); background: var(--black); color: var(--white); border-bottom: 2px solid var(--red); }
 .header-inner { min-height: 5.5rem; display: flex; align-items: center; gap: 1.5rem; }
 .brand { display: flex; align-items: center; text-decoration: none; margin-right: auto; }
