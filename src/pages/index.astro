@@ -2,13 +2,17 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { categories, flavors, menu } from '../data/menu';
 
+// Prefix absolute asset paths with the configured base (e.g. /wings-express)
+// so images resolve from the GitHub Pages project subfolder.
+const withBase = (path: string) => import.meta.env.BASE_URL.replace(/\/$/, '') + path;
+
 const doorDashUrl = 'https://www.doordash.com/store/wings-express-little-rock-30946593/?srsltid=AfmBOoq55SyV-j7pkhVwoWXJp-aQnUzwtB5Gciemg3lUekWpGplkSc-_';
 ---
 <BaseLayout>
   <header class="site-header">
     <div class="wide-container header-inner">
       <a class="brand" href="#top" aria-label="Wing Express home">
-        <img src="/images/wing-express-logo-tight.webp" width="240" height="194" alt="Wing Express" />
+        <img src={withBase('/images/wing-express-logo-tight.webp')} width="240" height="194" alt="Wing Express" />
       </a>
       <nav class="desktop-nav" aria-label="Primary navigation">
         <a href="#menu">Menu</a><i></i><a href="#story">Our Story</a><i></i><a href="#location">Hours & Location</a>
@@ -32,13 +36,13 @@ const doorDashUrl = 'https://www.doordash.com/store/wings-express-little-rock-30
           </div>
         </div>
       </div>
-      <div class="hero-media"><img class="hero-image" src="/images/facebook-wing-tray.jpg" width="1536" height="2048" alt="Wing Express wings, fries, roll and ranch in front of the Wing Express sign" fetchpriority="high" /><div class="hero-stamp"><strong>Bold.</strong><strong>Local.</strong><strong>Made fresh.</strong></div></div>
+      <div class="hero-media"><img class="hero-image" src={withBase('/images/facebook-wing-tray.jpg')} width="1536" height="2048" alt="Wing Express wings, fries, roll and ranch in front of the Wing Express sign" fetchpriority="high" /><div class="hero-stamp"><strong>Bold.</strong><strong>Local.</strong><strong>Made fresh.</strong></div></div>
     </section>
 
     <section class="community" id="story">
       <div class="community-grid wide-container">
         <div class="community-copy"><div class="story-stars" aria-hidden="true">★★★</div><h2>Little Rock,<br /><span>this one’s yours.</span></h2><p>Wing Express is a home-grown food truck serving bold wings and familiar favorites from the heart of Little Rock. Pull up, choose your flavor and pick it up fresh.</p><a class="button button-ghost" href="#menu">Explore the menu <span aria-hidden="true">›</span></a></div>
-        <div class="community-photo"><img class="community-logo-art" src="/images/instagram-logo-cropped.jpg" width="1440" height="1220" alt="Wing Express — Flavor on the Fly" loading="lazy" /></div>
+        <div class="community-photo"><img class="community-logo-art" src={withBase('/images/instagram-logo-cropped.jpg')} width="1440" height="1220" alt="Wing Express — Flavor on the Fly" loading="lazy" /></div>
         <div class="location-panel" id="location"><div class="location-heading"><span aria-hidden="true">●</span><h3>219 S. Cross St.<br />Little Rock, AR</h3></div><ul class="hours-list"><li><strong>Tue–Fri</strong><span class="hours-range"><span>11:30 AM–2:30 PM</span><span>4:00–7:00 PM</span></span></li><li><strong>Sat–Mon</strong><span>Closed</span></li></ul><p>Ordering closes 10 minutes before service ends.</p><a class="button button-secondary" href="https://maps.google.com/?q=219+S+Cross+St+Little+Rock+AR+72201" target="_blank" rel="noreferrer">Get directions</a></div>
       </div>
     </section>
@@ -72,7 +76,7 @@ const doorDashUrl = 'https://www.doordash.com/store/wings-express-little-rock-30
     </section>
   </main>
 
-  <footer class="site-footer"><div class="container footer-grid"><img class="footer-logo" src="/images/wing-express-logo-tight.webp" alt="" /><div><strong>Wing Express</strong><p>Home-grown wings, fish, tenders and sides in Little Rock.</p></div><div><a href="#menu">View menu</a><br /><a href="#location">Hours and directions</a><br /><a href="https://www.instagram.com/wingsexpress.lr/">Instagram</a></div></div></footer>
+  <footer class="site-footer"><div class="container footer-grid"><img class="footer-logo" src={withBase('/images/wing-express-logo-tight.webp')} alt="" /><div><strong>Wing Express</strong><p>Home-grown wings, fish, tenders and sides in Little Rock.</p></div><div><a href="#menu">View menu</a><br /><a href="#location">Hours and directions</a><br /><a href="https://www.instagram.com/wingsexpress.lr/">Instagram</a></div></div></footer>
 
   <script is:inline>
     // @ts-nocheck
@@ -82,10 +86,8 @@ const doorDashUrl = 'https://www.doordash.com/store/wings-express-little-rock-30
       $$('[data-category]').forEach((other) => other.setAttribute('aria-selected', String(other === tab)));
       $$('[data-category-item]').forEach((item) => item.hidden = item.dataset.categoryItem !== tab.dataset.category);
     }));
-    const load = async () => {
-      const config = await fetch('/api/config').then((r) => r.json()).catch(() => null); $('[data-open-label]').textContent = config?.label || 'See today’s hours';
-      const feed = await fetch('/api/instagram').then((r) => r.json()).catch(() => ({ posts: [] })); if (feed.posts?.length) $('[data-instagram]').innerHTML = feed.posts.map((post) => `<a href="${post.permalink}" target="_blank" rel="noreferrer"><img class="instagram-post" src="${post.media_url || post.thumbnail_url}" alt="Wing Express Instagram post" loading="lazy" /></a>`).join('');
-    };
-    load();
+    // Static site: no live backend, so show the standing hours label and keep the
+    // built-in Instagram empty state already rendered in the markup above.
+    $('[data-open-label]').textContent = 'See today’s hours';
   </script>
 </BaseLayout>

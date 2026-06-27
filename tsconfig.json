@@ -4,5 +4,6 @@
     "allowJs": true,
     "checkJs": true,
     "types": ["node"]
-  }
+  },
+  "exclude": ["node_modules", "dist", "server-disabled"]
 }

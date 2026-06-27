@@ -3,12 +3,16 @@ import '../styles/global.css';
 interface Props { title?: string; description?: string; }
 const { title = 'Wing Express | Wings in Little Rock, AR', description = 'Explore traditional and boneless wings, fish, tenders, platters and sides from Wing Express at 219 S. Cross St. in Little Rock, then order on DoorDash.' } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site || Astro.url.origin);
+// Prefix absolute paths with the configured base (e.g. /wings-express) so assets
+// resolve correctly when served from a GitHub Pages project subfolder.
+const withBase = (path: string) => import.meta.env.BASE_URL.replace(/\/$/, '') + path;
+const siteRoot = new URL(withBase('/'), Astro.site || Astro.url.origin).href;
 const doorDashUrl = 'https://www.doordash.com/store/wings-express-little-rock-30946593/';
 const schema = {
   '@context': 'https://schema.org', '@type': 'Restaurant', name: 'Wing Express',
-  image: new URL('/images/facebook-wing-tray.jpg', canonical).href,
-  url: canonical.origin, servesCuisine: ['Chicken Wings', 'Fish', 'American'], priceRange: '$',
-  acceptsReservations: false, menu: new URL('/#menu', canonical).href,
+  image: new URL(withBase('/images/facebook-wing-tray.jpg'), Astro.site || Astro.url.origin).href,
+  url: siteRoot, servesCuisine: ['Chicken Wings', 'Fish', 'American'], priceRange: '$',
+  acceptsReservations: false, menu: siteRoot + '#menu',
   address: { '@type': 'PostalAddress', streetAddress: '219 S. Cross St.', addressLocality: 'Little Rock', addressRegion: 'AR', postalCode: '72201', addressCountry: 'US' },
   openingHoursSpecification: ['Tuesday', 'Wednesday', 'Thursday', 'Friday'].flatMap((dayOfWeek) => [
     { '@type': 'OpeningHoursSpecification', dayOfWeek, opens: '11:30', closes: '14:30' },
@@ -31,7 +35,7 @@ const schema = {
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
-    <meta property="og:image" content={new URL('/images/facebook-wing-tray.jpg', canonical)} />
+    <meta property="og:image" content={new URL(withBase('/images/facebook-wing-tray.jpg'), Astro.site || Astro.url.origin)} />
     <meta name="twitter:card" content="summary_large_image" />
     <script is:inline type="application/ld+json" set:html={JSON.stringify(schema)} />
   </head>
