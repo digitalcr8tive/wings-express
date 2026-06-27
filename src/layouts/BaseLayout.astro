@@ -1,0 +1,42 @@
+---
+import '../styles/global.css';
+interface Props { title?: string; description?: string; }
+const { title = 'Wing Express | Wings in Little Rock, AR', description = 'Explore traditional and boneless wings, fish, tenders, platters and sides from Wing Express at 219 S. Cross St. in Little Rock, then order on DoorDash.' } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site || Astro.url.origin);
+const doorDashUrl = 'https://www.doordash.com/store/wings-express-little-rock-30946593/';
+const schema = {
+  '@context': 'https://schema.org', '@type': 'Restaurant', name: 'Wing Express',
+  image: new URL('/images/facebook-wing-tray.jpg', canonical).href,
+  url: canonical.origin, servesCuisine: ['Chicken Wings', 'Fish', 'American'], priceRange: '$',
+  acceptsReservations: false, menu: new URL('/#menu', canonical).href,
+  address: { '@type': 'PostalAddress', streetAddress: '219 S. Cross St.', addressLocality: 'Little Rock', addressRegion: 'AR', postalCode: '72201', addressCountry: 'US' },
+  openingHoursSpecification: ['Tuesday', 'Wednesday', 'Thursday', 'Friday'].flatMap((dayOfWeek) => [
+    { '@type': 'OpeningHoursSpecification', dayOfWeek, opens: '11:30', closes: '14:30' },
+    { '@type': 'OpeningHoursSpecification', dayOfWeek, opens: '16:00', closes: '19:00' }
+  ]),
+  potentialAction: { '@type': 'OrderAction', target: doorDashUrl },
+  sameAs: ['https://www.instagram.com/wingsexpress.lr/', doorDashUrl]
+};
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta name="theme-color" content="#b91f24" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={new URL('/images/facebook-wing-tray.jpg', canonical)} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(schema)} />
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+    <slot />
+  </body>
+</html>

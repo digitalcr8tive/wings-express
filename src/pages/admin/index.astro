@@ -1,0 +1,16 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { menu } from '../../data/menu';
+---
+<BaseLayout title="Menu availability | Wing Express" description="Wing Express menu availability controls.">
+  <header class="site-header"><div class="container header-inner"><a class="brand" href="/"><img src="/images/wing-express-logo-tight.webp" alt="Wing Express" /><span>MENU CONTROL</span></a></div></header>
+  <main class="menu-section"><div class="container"><h1 style="font-size:clamp(2.5rem,8vw,5rem)">Menu availability</h1><p>Enter the private admin key, then switch items between available and sold out.</p><div class="field" style="max-width:32rem"><label for="admin-key">Admin key</label><input id="admin-key" type="password" autocomplete="current-password" /></div><div class="form-error" data-admin-error aria-live="polite"></div><div class="menu-list">{menu.filter((item) => !item.catering).map((item) => <article class="menu-item"><div><h3>{item.name}</h3><span data-state={item.id}>Checking…</span></div><button class="button button-primary" data-toggle={item.id} disabled>Mark sold out</button></article>)}</div></div></main>
+  <script is:inline>
+    // @ts-nocheck
+    const statuses = await fetch('/api/menu-status').then((response) => response.json()).catch(() => ({}));
+    const buttons = [...document.querySelectorAll('[data-toggle]')]; const key = document.querySelector('#admin-key');
+    const render = () => buttons.forEach((button) => { const soldOut = Boolean(statuses[button.dataset.toggle]); document.querySelector(`[data-state="${button.dataset.toggle}"]`).textContent = soldOut ? 'Sold out' : 'Available'; button.textContent = soldOut ? 'Mark available' : 'Mark sold out'; }); render();
+    key.addEventListener('input', () => buttons.forEach((button) => button.disabled = !key.value));
+    buttons.forEach((button) => button.addEventListener('click', async () => { const id = button.dataset.toggle; button.disabled = true; const response = await fetch('/api/menu-status', { method: 'POST', headers: { 'content-type': 'application/json', 'x-admin-key': key.value }, body: JSON.stringify({ id, soldOut: !Boolean(statuses[id]) }) }); const data = await response.json(); if (!response.ok) { document.querySelector('[data-admin-error]').textContent = data.error; button.disabled = false; return; } Object.assign(statuses, data); document.querySelector('[data-admin-error]').textContent = ''; render(); button.disabled = false; }));
+  </script>
+</BaseLayout>

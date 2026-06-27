@@ -1,0 +1,12 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+const order = Astro.url.searchParams.get('order') || 'Your order';
+const cancelToken = Astro.url.searchParams.get('cancel') || '';
+---
+<BaseLayout title="Order received | Wing Express" description="Your Wing Express pickup order request has been received.">
+  <main class="success-page"><div><img src="/images/wing-express-logo-tight.webp" alt="Wing Express" width="180" style="margin:0 auto 1rem" /><h1>Payment received.</h1><p>Your order is pending confirmation from Wing Express.</p><p><strong>{order}</strong></p><p>You may cancel online within five minutes of placing the order.</p><div class="form-error" data-error aria-live="polite"></div><button class="button button-ghost" data-cancel>Cancel this order</button> <a class="button button-primary" href="/">Return home</a></div></main>
+  <script is:inline define:vars={{ order, cancelToken }}>
+    // @ts-nocheck
+    document.querySelector('[data-cancel]').addEventListener('click', async (event) => { const button = event.currentTarget; button.disabled = true; const response = await fetch(`/api/orders/${order}/cancel`, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ cancelToken }) }); const data = await response.json(); if (!response.ok) { document.querySelector('[data-error]').textContent = data.error; button.disabled = false; return; } button.textContent = 'Order cancelled'; });
+  </script>
+</BaseLayout>

@@ -1,0 +1,91 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { categories, flavors, menu } from '../data/menu';
+
+const doorDashUrl = 'https://www.doordash.com/store/wings-express-little-rock-30946593/?srsltid=AfmBOoq55SyV-j7pkhVwoWXJp-aQnUzwtB5Gciemg3lUekWpGplkSc-_';
+---
+<BaseLayout>
+  <header class="site-header">
+    <div class="wide-container header-inner">
+      <a class="brand" href="#top" aria-label="Wing Express home">
+        <img src="/images/wing-express-logo-tight.webp" width="240" height="194" alt="Wing Express" />
+      </a>
+      <nav class="desktop-nav" aria-label="Primary navigation">
+        <a href="#menu">Menu</a><i></i><a href="#story">Our Story</a><i></i><a href="#location">Hours & Location</a>
+      </nav>
+      <a class="button button-primary header-order" href={doorDashUrl} target="_blank" rel="noreferrer">Order on DoorDash <span aria-hidden="true">★</span></a>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section class="hero" id="top">
+      <div class="hero-copy-panel">
+        <div class="hero-copy-inner">
+          <span class="hero-wordmark">Wings Express</span>
+          <div class="wing-rule" aria-hidden="true"><span></span><b>★</b><span></span></div>
+          <h1>Flavor <span>on the fly</span></h1>
+          <p class="hero-copy">Little Rock made. Bold wings, fish, tenders and sides, ready at the pickup window.</p>
+          <div class="hero-actions"><a class="text-link" href="#menu">View full menu <span aria-hidden="true">›</span></a></div>
+          <div class="service-status" aria-live="polite">
+            <span class="status-item"><i aria-hidden="true">◷</i><b><span data-open-label>Checking today's hours…</span><small>Tuesday–Friday</small></b></span>
+            <span class="status-item"><i aria-hidden="true">◆</i><b>Browse here first<small>Order on DoorDash</small></b></span>
+          </div>
+        </div>
+      </div>
+      <div class="hero-media"><img class="hero-image" src="/images/facebook-wing-tray.jpg" width="1536" height="2048" alt="Wing Express wings, fries, roll and ranch in front of the Wing Express sign" fetchpriority="high" /><div class="hero-stamp"><strong>Bold.</strong><strong>Local.</strong><strong>Made fresh.</strong></div></div>
+    </section>
+
+    <section class="community" id="story">
+      <div class="community-grid wide-container">
+        <div class="community-copy"><div class="story-stars" aria-hidden="true">★★★</div><h2>Little Rock,<br /><span>this one’s yours.</span></h2><p>Wing Express is a home-grown food truck serving bold wings and familiar favorites from the heart of Little Rock. Pull up, choose your flavor and pick it up fresh.</p><a class="button button-ghost" href="#menu">Explore the menu <span aria-hidden="true">›</span></a></div>
+        <div class="community-photo"><img class="community-logo-art" src="/images/instagram-logo-cropped.jpg" width="1440" height="1220" alt="Wing Express — Flavor on the Fly" loading="lazy" /></div>
+        <div class="location-panel" id="location"><div class="location-heading"><span aria-hidden="true">●</span><h3>219 S. Cross St.<br />Little Rock, AR</h3></div><ul class="hours-list"><li><strong>Tue–Fri</strong><span class="hours-range"><span>11:30 AM–2:30 PM</span><span>4:00–7:00 PM</span></span></li><li><strong>Sat–Mon</strong><span>Closed</span></li></ul><p>Ordering closes 10 minutes before service ends.</p><a class="button button-secondary" href="https://maps.google.com/?q=219+S+Cross+St+Little+Rock+AR+72201" target="_blank" rel="noreferrer">Get directions</a></div>
+      </div>
+    </section>
+
+    <section class="menu-section" id="menu">
+      <div class="container">
+        <div class="section-heading"><div><h2>Know your order.</h2><p>Browse current selections and prices here, then use the DoorDash button in the header to customize, check availability and pay.</p></div></div>
+        <p class="menu-source-note"><strong>Good to know:</strong> Prices shown are before tax. DoorDash availability and checkout pricing are final.</p>
+        <div class="category-tabs" role="tablist" aria-label="Menu categories">
+          {categories.map((category, index) => <button class="category-tab" role="tab" aria-selected={index === 0 ? 'true' : 'false'} data-category={category.id}>{category.label}</button>)}
+        </div>
+        <div class="menu-layout">
+          <div class="menu-list" aria-live="polite">
+            {menu.map((item) => (
+              <article class="menu-item" data-menu-item={item.id} data-category-item={item.category} hidden={item.category !== 'combos'}>
+                <div><h3>{item.name}</h3><p>{item.description}</p><span class="sold-label" hidden>Sold out</span></div>
+                <span class="price">${item.price}</span>
+              </article>
+            ))}
+          </div>
+          <aside class="flavor-board">
+            <h3>Flavor board</h3>
+            <div class="flavor-columns"><div><strong>Wet</strong><ul>{flavors.wet.map((flavor) => <li>{flavor}</li>)}</ul></div><div><strong>Dry</strong><ul>{flavors.dry.map((flavor) => <li>{flavor}</li>)}</ul></div></div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="instagram" aria-labelledby="instagram-title">
+      <div class="container"><div class="section-heading"><div><h2 id="instagram-title">Fresh from Instagram.</h2><p>New Wing Express posts published after June 27, 2026 will appear here once the account connection is added.</p></div><a class="button button-ghost" href="https://www.instagram.com/wingsexpress.lr/" target="_blank" rel="noreferrer">Follow @wingsexpress.lr</a></div><div class="instagram-grid" data-instagram><div class="instagram-empty"><strong>See what’s cooking.</strong><p>Visit Instagram for current food, events and updates.</p></div></div></div>
+    </section>
+  </main>
+
+  <footer class="site-footer"><div class="container footer-grid"><img class="footer-logo" src="/images/wing-express-logo-tight.webp" alt="" /><div><strong>Wing Express</strong><p>Home-grown wings, fish, tenders and sides in Little Rock.</p></div><div><a href="#menu">View menu</a><br /><a href="#location">Hours and directions</a><br /><a href="https://www.instagram.com/wingsexpress.lr/">Instagram</a></div></div></footer>
+
+  <script is:inline>
+    // @ts-nocheck
+    const $ = (selector, root = document) => root.querySelector(selector);
+    const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
+    $$('[data-category]').forEach((tab) => tab.addEventListener('click', () => {
+      $$('[data-category]').forEach((other) => other.setAttribute('aria-selected', String(other === tab)));
+      $$('[data-category-item]').forEach((item) => item.hidden = item.dataset.categoryItem !== tab.dataset.category);
+    }));
+    const load = async () => {
+      const config = await fetch('/api/config').then((r) => r.json()).catch(() => null); $('[data-open-label]').textContent = config?.label || 'See today’s hours';
+      const feed = await fetch('/api/instagram').then((r) => r.json()).catch(() => ({ posts: [] })); if (feed.posts?.length) $('[data-instagram]').innerHTML = feed.posts.map((post) => `<a href="${post.permalink}" target="_blank" rel="noreferrer"><img class="instagram-post" src="${post.media_url || post.thumbnail_url}" alt="Wing Express Instagram post" loading="lazy" /></a>`).join('');
+    };
+    load();
+  </script>
+</BaseLayout>
