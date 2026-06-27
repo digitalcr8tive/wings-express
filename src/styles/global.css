@@ -59,7 +59,7 @@ p { text-wrap: pretty; }
 .hero-copy-panel { display: grid; align-items: center; padding: clamp(2.5rem, 7vw, 5rem) 1rem; }
 .hero-copy-inner { width: min(100%, 35rem); margin-inline: auto; animation: hero-copy-in 700ms var(--ease) both; }
 .hero-wordmark { display: block; font: 800 clamp(2.2rem, 8vw, 4rem)/1.08 var(--display); letter-spacing: .11em; text-align: center; text-transform: uppercase; margin-bottom: 0; }
-.wing-rule { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: .75rem; margin: .9rem 0 .9rem; color: var(--red); }
+.wing-rule { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: .75rem; margin: .3rem 0 .55rem; color: var(--red); }
 .wing-rule span { height: 3px; background: var(--red); }
 .wing-rule b { font-size: 1.15rem; }
 .hero h1 { max-width: none; margin-bottom: .65rem; color: var(--white); font-size: clamp(3.5rem, 13vw, 6rem); line-height: 1.06; text-align: center; text-transform: uppercase; }
