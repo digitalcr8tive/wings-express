@@ -58,8 +58,8 @@ p { text-wrap: pretty; }
 .hero { display: grid; overflow: hidden; background: var(--black); color: var(--white); }
 .hero-copy-panel { display: grid; align-items: center; padding: clamp(2.5rem, 7vw, 5rem) 1rem; }
 .hero-copy-inner { width: min(100%, 35rem); margin-inline: auto; animation: hero-copy-in 700ms var(--ease) both; }
-.hero-wordmark { display: block; font: 800 clamp(2.2rem, 8vw, 4rem)/1.08 var(--display); letter-spacing: .11em; text-align: center; text-transform: uppercase; margin-bottom: -.5rem; }
-.wing-rule { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: .75rem; margin: -1.5rem 0 .35rem; color: var(--red); }
+.hero-wordmark { display: block; font: 800 clamp(2.2rem, 8vw, 4rem)/1.08 var(--display); letter-spacing: .11em; text-align: center; text-transform: uppercase; margin-bottom: 0; }
+.wing-rule { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: .75rem; margin: .9rem 0 .9rem; color: var(--red); }
 .wing-rule span { height: 3px; background: var(--red); }
 .wing-rule b { font-size: 1.15rem; }
 .hero h1 { max-width: none; margin-bottom: .65rem; color: var(--white); font-size: clamp(3.5rem, 13vw, 6rem); line-height: 1.06; text-align: center; text-transform: uppercase; }
@@ -126,8 +126,8 @@ p { text-wrap: pretty; }
   .hero { grid-template-columns: minmax(22rem, 44%) 1fr; height: 34rem; min-height: 0; }
   .hero-copy-panel { min-height: 0; padding: 1.5rem clamp(1.5rem, 4vw, 4rem); }
   .hero-media { height: 100%; min-height: 0; }
-  .hero-wordmark { line-height: 1.08; }
-  .wing-rule { margin-top: -1.5rem; }
+  .hero-wordmark { line-height: 1.08; margin-bottom: -.5rem; }
+  .wing-rule { margin: -1.5rem 0 .35rem; }
   .hero h1 { margin-bottom: .75rem; font-size: clamp(3.75rem, 5vw, 5.3rem); }
   .hero-actions { margin: .85rem 0; }
   .service-status { padding-top: .7rem; }
