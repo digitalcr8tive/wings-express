@@ -46,6 +46,7 @@ p { text-wrap: pretty; }
 .button-secondary { background: var(--white); color: var(--black); }
 .button-ghost { background: transparent; color: currentColor; border: 2px solid currentColor; }
 .button:disabled { opacity: .5; cursor: not-allowed; }
+.dd-logo { width: 1.5em; height: auto; fill: currentColor; flex: 0 0 auto; }
 .site-header { position: sticky; top: 0; z-index: var(--z-sticky); background: var(--black); color: var(--white); border-bottom: 2px solid var(--red); }
 .header-inner { min-height: 5.5rem; display: flex; align-items: center; gap: 1.5rem; }
 .brand { display: flex; align-items: center; text-decoration: none; margin-right: auto; }
@@ -71,6 +72,7 @@ p { text-wrap: pretty; }
 .service-status { display: flex; flex-wrap: wrap; justify-content: center; gap: 1.25rem; padding-top: .9rem; border-top: 1px solid oklch(0.35 0 0); }
 .status-item { display: flex; align-items: center; gap: .7rem; font-size: .82rem; text-transform: uppercase; }
 .status-item i { width: 2.5rem; height: 2.5rem; display: grid; place-items: center; border-radius: 50%; background: var(--red); color: var(--white); font-style: normal; }
+.status-item i .dd-logo { width: 1.4rem; }
 .status-item b { line-height: 1.1; }
 .status-item small { display: block; margin-top: .25rem; font: 600 .68rem/1 var(--body); letter-spacing: .06em; color: oklch(0.8 0 0); }
 .hero-media { position: relative; min-height: 22rem; overflow: hidden; }
